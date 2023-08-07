@@ -8,7 +8,9 @@ c_compiler:
   - gcc                        # [linux]
   - clang                      # [osx]
   - vs2019                     # [win]
+  - emscripten                 # [emscripten]
 c_compiler_version:            # [unix]
+  - 3                          # [emscripten]
   - 11                         # [linux]
   - 14                         # [osx]
   - 7                          # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
@@ -19,7 +21,9 @@ cxx_compiler:
   - gxx                        # [linux]
   - clangxx                    # [osx]
   - vs2019                     # [win]
+  - emscripten                 # [emscripten]
 cxx_compiler_version:          # [unix]
+  - 3                          # [emscripten]
   - 11                         # [linux]
   - 14                         # [osx]
   - 7                          # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
@@ -301,6 +305,8 @@ coin_or_utils:
   - 2.11
 console_bridge:
   - 1.0
+cross-python_emscripten-32:
+  - '3.10.1'
 cutensor:
   - 1
 curl:
@@ -570,7 +576,7 @@ numpy:
   # part of a zip_keys: python, python_impl, numpy
   - 1.20
   - 1.20
-  - 1.21
+  - 1.25
 occt:
   - 7.6
 openblas:

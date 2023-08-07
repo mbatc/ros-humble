@@ -9,7 +9,7 @@ build_number: 3
 
 mutex_package: ros2-distro-mutex 0.4 humble
 
-skip_all_deps: true
+skip_all_deps: false
 
 # If full rebuild, the build number of the existing package has
 # to match the selected build number for skipping
@@ -34,16 +34,15 @@ packages_remove_from_deps:
 skip_existing:
   # - https://conda.anaconda.org/robostack-staging/
   # - /home/mbatc/miniconda3/envs/robostackenv/conda-bld/
+  - https://repo.mamba.pm/emscripten-forge
 
 packages_select_by_deps:
   # only subset of packages to reduce maintainer load
-  - rclcpp
-  - ros_core
-  - fastcdr
-
   - ros_workspace
   - ros_environment
-  # - ament_cmake
+  # - examples_rclcpp_minimal_subscriber
+  # - examples_rclcpp_minimal_publisher
+  - ament_cmake
   # - ros_base
   # - desktop
   # - navigation2
@@ -354,7 +353,7 @@ packages_select_by_deps:
   # - dynamixel-sdk
   # - dynamixel-sdk-custom-interfaces
   # - dynamixel-sdk-examples
-  - examples-rclcpp-cbg-executor
+  # - examples-rclcpp-cbg-executor
   # - examples-rclpy-guard-conditions
   # - examples-rclpy-pointcloud-publisher
   # - examples-tf2-py
@@ -420,8 +419,8 @@ packages_select_by_deps:
   # - rc-common-msgs
   # - rcdiscover
   # - rc-genicam-api
-  - rclc
-  - rclc-examples
+  # - rclc
+  # - rclc-examples
   # - rclc-lifecycle
   # - rclc-parameter
   # - rclcpp-cascade-lifecycle
@@ -513,4 +512,3 @@ packages_select_by_deps:
   # - osrf_testing_tools_cpp
 
 patch_dir: patch
-
