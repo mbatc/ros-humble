@@ -33,7 +33,7 @@ packages_remove_from_deps:
 
 skip_existing:
   # - https://conda.anaconda.org/robostack-staging/
-  # - /home/mbatc/miniconda3/envs/robostackenv/conda-bld/
+  - /home/mbatc/miniconda3/envs/robostackenv/conda-bld/
   - https://repo.mamba.pm/emscripten-forge
 
 packages_select_by_deps:
