@@ -1,16 +1,18 @@
 package:
   name: ros-humble-rmw-wasm-cpp
-  version: 1.0
+  version: 1.0.0
+
 source:
   git_url: https://github.com/ihuicatl/rmw_wasm.git
   git_rev: main
-  folder: ros-humble-rmw-wasm-cpp/src/work/rmw_wasm_cpp
+  folder: ros-humble-rmw-wasm-cpp/src/work
 
 build:
   script:
     sel(unix): build.sh
     sel(emscripten-32): build.sh
-  number: 3
+  number: 0
+
 about:
   home: https://www.ros.org/
   license: BSD-3-Clause
@@ -34,7 +36,6 @@ requirements:
     - sel(build_platform != target_platform): cross-python_{{ target_platform }}
     - sel(build_platform != target_platform): cython
     - sel(build_platform != target_platform): numpy
-    - ros-humble-ament-cmake
   host:
     - numpy
     - pip
@@ -43,7 +44,8 @@ requirements:
     - ros-humble-rcutils
     - ros-humble-rcpputils
     - ros-humble-rmw
-    - ros-humble-wasm_cpp
+    - ros-humble-wasm-cpp
+    - ros-humble-ament-cmake
     - dynmsg
     - ros-humble-rosidl-runtime-c
     - ros-humble-rosidl-runtime-cpp

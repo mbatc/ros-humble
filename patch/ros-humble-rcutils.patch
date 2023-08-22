@@ -78,3 +78,16 @@ index 4914c4f..15901e2 100644
      sizeof(error_string->str) == (
        sizeof(error_state->message) +
        sizeof(format_1) - 1 /* minus the null-term */ +
+diff --git a/src/strerror.c b/src/strerror.c
+index a425010..282a107 100644
+--- a/src/strerror.c
++++ b/src/strerror.c
+@@ -27,7 +27,7 @@ rcutils_strerror(char * buffer, size_t buffer_length)
+ {
+ #if defined(_WIN32)
+   strerror_s(buffer, buffer_length, errno);
+-#elif defined(_GNU_SOURCE) && (!defined(ANDROID) || __ANDROID_API__ >= 23) && !defined(__QNXNTO__)
++#elif defined(_GNU_SOURCE) && (!defined(ANDROID) || __ANDROID_API__ >= 23) && !defined(__QNXNTO__) && !defined(__EMSCRIPTEN__)
+   /* GNU-specific */
+   char * msg = strerror_r(errno, buffer, buffer_length);
+   if (msg != buffer) {
