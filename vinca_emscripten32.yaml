@@ -43,6 +43,8 @@ packages_select_by_deps:
   - ament_pep257
   - ament_flake8
   - ament_lint
+  - ament_lint_common
+  - ament_pycodestyle
   - rmw
   - rclc
   - rcutils
