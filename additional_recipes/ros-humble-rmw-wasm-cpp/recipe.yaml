@@ -56,9 +56,9 @@ requirements:
     - sel(target_platform != 'emscripten-32'): cmake
     - python
     - dynmsg
-    - rosidl-runtime-c
-    - rosidl-runtime-cpp
-    - rosidl-typesupport-introspection-c
-    - rosidl-typesupport-introspection-cpp
+    - ros-humble-rosidl-runtime-c
+    - ros-humble-rosidl-runtime-cpp
+    - ros-humble-rosidl-typesupport-introspection-c
+    - ros-humble-rosidl-typesupport-introspection-cpp
     - ros2-distro-mutex 0.4 humble
     - sel(osx and x86_64): __osx >={{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}

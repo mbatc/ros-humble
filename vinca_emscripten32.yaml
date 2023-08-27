@@ -24,6 +24,7 @@ packages_skip_by_deps:
   - rmw_fastrtps_shared_cpp
   - rmw_fastrtps_dynamic_cpp
   - rmw_fastrtps_dds_common
+  - mimick_vendor
 
 packages_remove_from_deps:
   - cartographer
@@ -46,12 +47,13 @@ packages_select_by_deps:
   - ament_lint_common
   - ament_pycodestyle
   - rmw
-  - rclc
+  # - rclc
   - rcutils
   - rcpputils
   - rosidl_runtime_c
   - rosidl_runtime_cpp
   - rosidl_typesupport_introspection_c
   - rosidl_typesupport_introspection_cpp
+  - yaml_cpp_vendor
 
 patch_dir: patch

@@ -11,6 +11,9 @@ source:
   folder: dynmsg/src/work
 
 build:
+  script:
+    sel(unix): build.sh
+    sel(emscripten-32): build.sh
   number: 0
 
 requirements:
