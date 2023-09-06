@@ -51,11 +51,16 @@ requirements:
     - ros-humble-rosidl-runtime-cpp
     - ros-humble-rosidl-typesupport-introspection-c
     - ros-humble-rosidl-typesupport-introspection-cpp
+    - ros-humble-yaml-cpp-vendor
     - ros2-distro-mutex 0.4 humble
   run:
     - sel(target_platform != 'emscripten-32'): cmake
     - python
     - dynmsg
+    - ros-humble-rmw
+    - ros-humble-wasm-cpp
+    - ros-humble-rcutils
+    - ros-humble-rcpputils
     - ros-humble-rosidl-runtime-c
     - ros-humble-rosidl-runtime-cpp
     - ros-humble-rosidl-typesupport-introspection-c
