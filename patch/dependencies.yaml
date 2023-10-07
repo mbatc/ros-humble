@@ -150,3 +150,8 @@ ros_image_to_qimage:
   add_host: ["REQUIRE_OPENGL"]
 rqt_image_overlay:
   add_host: ["REQUIRE_OPENGL"]
+tracetools:
+  remove_host: [ "pkg-config" ]
+rcl_logging_spdlog:
+  add_host: [ "fmt" ]
+  

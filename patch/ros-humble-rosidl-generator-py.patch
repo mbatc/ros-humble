@@ -1,16 +1,27 @@
 diff --git a/cmake/rosidl_generator_py_generate_interfaces.cmake b/cmake/rosidl_generator_py_generate_interfaces.cmake
-index a6d8263..ecae76b 100644
+index a6d8263..eb6ecdc 100644
 --- a/cmake/rosidl_generator_py_generate_interfaces.cmake
 +++ b/cmake/rosidl_generator_py_generate_interfaces.cmake
-@@ -21,6 +21,7 @@ find_package(PythonInterp 3.6 REQUIRED)
+@@ -21,7 +21,17 @@ find_package(PythonInterp 3.6 REQUIRED)
  
  find_package(python_cmake_module REQUIRED)
  find_package(PythonExtra MODULE REQUIRED)
-+find_package(Python3 REQUIRED COMPONENTS Development NumPy)
- 
+-
++if (EMSCRIPTEN)
++  # Fixes an error where find_path fails to find numpy headers as it only searches
++  # with the sysroot prefix. An absolute path is appended to the sysroot prefix
++  # and the numpy headers are not found.
++  set(_PREV_CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ${CMAKE_FIND_ROOT_PATH})
++  set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE BOTH)
++  find_package(Python3 REQUIRED COMPONENTS Development NumPy)
++  set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ${_PREV_CMAKE_FIND_ROOT_PATH_MODE_INCLUDE})
++else()
++  find_package(Python3 REQUIRED COMPONENTS Development NumPy)
++endif()
  # Get a list of typesupport implementations from valid rmw implementations.
  rosidl_generator_py_get_typesupports(_typesupport_impls)
-@@ -165,52 +166,23 @@ set(rosidl_generator_py_suffix "__rosidl_generator_py")
+ 
+@@ -165,52 +175,23 @@ set(rosidl_generator_py_suffix "__rosidl_generator_py")
  set(_target_name_lib "${rosidl_generate_interfaces_TARGET}${rosidl_generator_py_suffix}")
  add_library(${_target_name_lib} SHARED ${_generated_c_files})
  target_link_libraries(${_target_name_lib}
@@ -66,7 +77,7 @@ index a6d8263..ecae76b 100644
  
  foreach(_typesupport_impl ${_typesupport_impls})
    find_package(${_typesupport_impl} REQUIRED)
-@@ -245,27 +217,28 @@ foreach(_typesupport_impl ${_typesupport_impls})
+@@ -245,27 +226,28 @@ foreach(_typesupport_impl ${_typesupport_impls})
    endif()
    target_link_libraries(
      ${_target_name}
@@ -99,7 +110,7 @@ index a6d8263..ecae76b 100644
        ${_pkg_name}
      )
    endforeach()
-@@ -273,7 +246,7 @@ foreach(_typesupport_impl ${_typesupport_impls})
+@@ -273,7 +255,7 @@ foreach(_typesupport_impl ${_typesupport_impls})
    add_dependencies(${_target_name}
      ${rosidl_generate_interfaces_TARGET}__${_typesupport_impl}
    )
@@ -108,7 +119,7 @@ index a6d8263..ecae76b 100644
      "rosidl_runtime_c"
      "rosidl_generator_py"
    )
-@@ -288,7 +261,7 @@ set(PYTHON_EXECUTABLE ${_PYTHON_EXECUTABLE})
+@@ -288,7 +270,7 @@ set(PYTHON_EXECUTABLE ${_PYTHON_EXECUTABLE})
  
  # Depend on rosidl_generator_py generated targets from our dependencies
  foreach(_pkg_name ${rosidl_generate_interfaces_DEPENDENCY_PACKAGE_NAMES})
@@ -117,7 +128,7 @@ index a6d8263..ecae76b 100644
  endforeach()
  
  set_lib_properties("")
-@@ -352,4 +325,4 @@ if(BUILD_TESTING AND rosidl_generate_interfaces_ADD_LINTER_TESTS)
+@@ -352,4 +334,4 @@ if(BUILD_TESTING AND rosidl_generate_interfaces_ADD_LINTER_TESTS)
        MAX_LINE_LENGTH 0
        "${_output_path}")
    endif()
