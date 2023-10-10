@@ -33,7 +33,7 @@ packages_remove_from_deps:
 
 skip_existing:
   # - https://conda.anaconda.org/robostack-staging/
-  # - /home/mbatc/miniconda3/envs/emrobostack-dev/conda-bld/
+  # - /home/mbatc/micromamba/envs/emrobostack-dev/conda-bld/
   - https://repo.mamba.pm/emscripten-forge
 
 packages_select_by_deps:
@@ -47,7 +47,11 @@ packages_select_by_deps:
   - ament_lint_common
   - ament_pycodestyle
   - rmw
-  # - rclc
+  - rclc
+  - rclcpp
+  - examples_rclcpp_minimal_subscriber
+  - examples_rclcpp_minimal_publisher
+  - builtin_interfaces
   - rcutils
   - rcpputils
   - rosidl_runtime_c
