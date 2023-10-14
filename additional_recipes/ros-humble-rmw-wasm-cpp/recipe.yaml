@@ -6,6 +6,8 @@ source:
   git_url: https://github.com/ihuicatl/rmw_wasm.git
   git_rev: main
   folder: ros-humble-rmw-wasm-cpp/src/work
+  patches:
+    - patches/ros-humble-wasm-cpp.patch
 
 build:
   script:
