@@ -43,7 +43,7 @@ packages_select_by_deps:
 
   - ros_workspace
   - ros_environment
-  # - ament_cmake
+  - builtin_interfaces
   # - ros_base
   # - desktop
   # - navigation2

@@ -170,6 +170,8 @@ examples_rclcpp_minimal_subscriber:
   add_host: [ "ros-humble-yaml-cpp-vendor", "fmt" ]
 examples_rclcpp_minimal_publisher:
   add_host: [ "ros-humble-yaml-cpp-vendor", "fmt" ]
+rclcpp_components:
+  add_host: [ "ros-humble-yaml-cpp-vendor", "fmt" ]
 rmw_implementation:
   remove_host:
     - ros-humble-rmw-connextdds
