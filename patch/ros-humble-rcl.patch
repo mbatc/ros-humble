@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index d0faad0a..576f826b 100644
+index 11462f11..257a6d4a 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -18,14 +18,10 @@ include(cmake/get_default_rcl_logging_implementation.cmake)
@@ -19,6 +19,54 @@ index d0faad0a..576f826b 100644
  
  if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
    add_compile_options(-Wall -Wextra -Wpedantic)
+@@ -71,16 +67,39 @@ target_include_directories(${PROJECT_NAME} PUBLIC
+   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+   "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>")
+ # specific order: dependents before dependencies
++
+ ament_target_dependencies(${PROJECT_NAME}
+-  "rcl_interfaces"
+-  "rcl_logging_interface"
+-  "rcl_yaml_param_parser"
+-  "rcutils"
+-  "rmw"
+-  "rmw_implementation"
++#   "rcl_interfaces"
++#   "rcl_logging_interface"
++#   "rcl_yaml_param_parser"
++#   "rcutils"
++#   "rmw"
++#   "rmw_implementation"
+   ${RCL_LOGGING_IMPL}
+-  "rosidl_runtime_c"
+-  "tracetools"
++#   "rosidl_runtime_c"
++#   "tracetools"
++)
++
++target_include_directories(${PROJECT_NAME} PUBLIC
++  ${rcl_interfaces_INCLUDE_DIRS}
++  ${rcl_logging_interface_INCLUDE_DIRS}
++  ${rcl_yaml_param_parser_INCLUDE_DIRS}
++  ${rcutils_INCLUDE_DIRS}
++  ${rmw_INCLUDE_DIRS}
++  ${rmw_implementation_INCLUDE_DIRS}
++  ${rosidl_runtime_c_INCLUDE_DIRS}
++  ${tracetools_INCLUDE_DIRS}
++)
++
++target_link_libraries(${PROJECT_NAME} 
++  ${rcl_interfaces_LIBRARIES}
++  ${rcl_logging_interface_LIBRARIES}
++  # ${rcl_yaml_param_parser_LIBRARIES}
++  ${rcutils_LIBRARIES}
++  ${rmw_LIBRARIES}
++  ${rmw_implementation_LIBRARIES}
++  ${rosidl_runtime_c_LIBRARIES}
++  ${tracetools_LIBRARIES}
+ )
+ 
+ # Causes the visibility macros to use dllexport rather than dllimport,
 diff --git a/src/rcl/context.c b/src/rcl/context.c
 index 5414cc5e..b082aa01 100644
 --- a/src/rcl/context.c
