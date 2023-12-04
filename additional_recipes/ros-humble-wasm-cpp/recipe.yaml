@@ -11,7 +11,7 @@ source:
 build:
   script:
     sel(unix): build.sh
-    sel(emscripten-32): build.sh
+    sel(emscripten-wasm32): build.sh
   number: 0
 
 about:
@@ -22,9 +22,9 @@ about:
 
 requirements:
   build:
-    - sel(target_platform != 'emscripten-32'): "{{ compiler('cxx') }}"
-    - sel(target_platform != 'emscripten-32'): "{{ compiler('c') }}"
-    - sel(target_platform == 'emscripten-32'): emscripten_emscripten-32
+    - sel(target_platform != 'emscripten-wasm32'): "{{ compiler('cxx') }}"
+    - sel(target_platform != 'emscripten-wasm32'): "{{ compiler('c') }}"
+    - sel(target_platform == 'emscripten-wasm32'): emscripten_emscripten-wasm32
     - sel(linux64): sysroot_linux-64 2.17
     - ninja
     - setuptools
@@ -44,10 +44,10 @@ requirements:
     - python
     - ros-humble-ament-cmake
     - ros-humble-rcutils
-    - ros2-distro-mutex 0.4 humble
+    - ros2-distro-mutex 0.3 humble
   run:
-    - sel(target_platform != 'emscripten-32'): cmake
+    - sel(target_platform != 'emscripten-wasm32'): cmake
     - python
     - ros-humble-rcutils
-    - ros2-distro-mutex 0.4 humble
+    - ros2-distro-mutex 0.3 humble
     - sel(osx and x86_64): __osx >={{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}

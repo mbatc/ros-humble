@@ -1,6 +1,3 @@
-# necessary for correctly linking SIP files (from python_qt_bindings)
-export LINK=$CXX
-
 export CONDA_BUILD_CROSS_COMPILATION="1"
 
 echo "set_property(GLOBAL PROPERTY TARGET_SUPPORTS_SHARED_LIBS TRUE)">> $SRC_DIR/__vinca_shared_lib_patch.cmake
@@ -10,8 +7,8 @@ echo "set(CMAKE_STRIP FALSE)  # used by default in pybind11 on .so modules">> $S
 
 export USE_WASM=ON
 export Python_EXECUTABLE="$BUILD_PREFIX/bin/python"
-export Python_INCLUDE_DIR="$PREFIX/include/python3.10"
-export Python_LIBRARY="$PREFIX/lib/python3.10"
+export Python_INCLUDE_DIR="$PREFIX/include/python3.11"
+export Python_LIBRARY="$PREFIX/lib/python3.11"
 export EXTRA_CMAKE_ARGS=" \
     -DTHREADS_PREFER_PTHREAD_FLAG=TRUE\
     -DPython_SITELIB=$SP_DIR       \
@@ -21,14 +18,6 @@ export EXTRA_CMAKE_ARGS=" \
     -DAMENT_PREFIX_PATH=$PREFIX \
     -DCMAKE_PROJECT_INCLUDE=$SRC_DIR/__vinca_shared_lib_patch.cmake \
   "
-
-# see https://github.com/conda-forge/cross-python-feedstock/issues/24
-if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" ]]; then
-  find $PREFIX/lib/cmake -type f -exec sed -i "s~\${_IMPORT_PREFIX}/lib/python${ROS_PYTHON_VERSION}/site-packages~${BUILD_PREFIX}/lib/python${ROS_PYTHON_VERSION}/site-packages~g" {} + || true
-  find $PREFIX/share/rosidl* -type f -exec sed -i "s~$PREFIX/lib/python${ROS_PYTHON_VERSION}/site-packages~${BUILD_PREFIX}/lib/python${ROS_PYTHON_VERSION}/site-packages~g" {} + || true
-  find $PREFIX/share/rosidl* -type f -exec sed -i "s~\${_IMPORT_PREFIX}/lib/python${ROS_PYTHON_VERSION}/site-packages~${BUILD_PREFIX}/lib/python${ROS_PYTHON_VERSION}/site-packages~g" {} + || true
-  find $PREFIX/lib/cmake -type f -exec sed -i "s~message(FATAL_ERROR \"The imported target~message(WARNING \"The imported target~g" {} + || true
-fi
 
 unset -f cmake
 

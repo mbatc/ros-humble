@@ -7,13 +7,13 @@ source:
   git_rev: main
   folder: ros-humble-rmw-wasm-cpp/src/work
   patches:
-    - patches/ros-humble-wasm-cpp.patch
+    - patches/ros-humble-rmw-wasm-cpp.patch
 
 build:
   script:
     sel(unix): build.sh
-    sel(emscripten-32): build.sh
-  number: 0
+    sel(emscripten-wasm32): build.sh
+  number: 1
 
 about:
   home: https://www.ros.org/
@@ -23,9 +23,9 @@ about:
 
 requirements:
   build:
-    - sel(target_platform != 'emscripten-32'): "{{ compiler('cxx') }}"
-    - sel(target_platform != 'emscripten-32'): "{{ compiler('c') }}"
-    - sel(target_platform == 'emscripten-32'): emscripten_emscripten-32
+    - sel(target_platform != 'emscripten-wasm32'): "{{ compiler('cxx') }}"
+    - sel(target_platform != 'emscripten-wasm32'): "{{ compiler('c') }}"
+    - sel(target_platform == 'emscripten-wasm32'): emscripten_emscripten-wasm32
     - sel(linux64): sysroot_linux-64 2.17
     - ninja
     - setuptools
@@ -54,9 +54,9 @@ requirements:
     - ros-humble-rosidl-typesupport-introspection-c
     - ros-humble-rosidl-typesupport-introspection-cpp
     - ros-humble-yaml-cpp-vendor
-    - ros2-distro-mutex 0.4 humble
+    - ros2-distro-mutex 0.3 humble
   run:
-    - sel(target_platform != 'emscripten-32'): cmake
+    - sel(target_platform != 'emscripten-wasm32'): cmake
     - python
     - dynmsg
     - ros-humble-rmw
@@ -67,5 +67,5 @@ requirements:
     - ros-humble-rosidl-runtime-cpp
     - ros-humble-rosidl-typesupport-introspection-c
     - ros-humble-rosidl-typesupport-introspection-cpp
-    - ros2-distro-mutex 0.4 humble
+    - ros2-distro-mutex 0.3 humble
     - sel(osx and x86_64): __osx >={{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}

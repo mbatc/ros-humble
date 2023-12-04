@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index eb48e4e..40af579 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -70,7 +70,7 @@ function(configure_build_install_location _library_name)
+ endfunction()
+ 
+ # Split from main extension and converted to pybind11
+-pybind11_add_module(_rclpy_pybind11 SHARED
++pybind11_add_module(_rclpy_pybind11 MODULE NO_EXTRAS
+   src/rclpy/_rclpy_logging.cpp
+   src/rclpy/_rclpy_pybind11.cpp
+   src/rclpy/action_client.cpp

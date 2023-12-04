@@ -1,9 +1,9 @@
 package:
   name: ros2-distro-mutex
-  version: 0.4.0
+  version: 0.3.0
 
 build:
-  number: 0
+  number: 1
   string: humble
   # run_exports:
   #   - "{{ pin_subpackage('ros2-distro-mutex', max_pin='x.x') }}"

@@ -91,3 +91,16 @@ index a425010..282a107 100644
    /* GNU-specific */
    char * msg = strerror_r(errno, buffer, buffer_length);
    if (msg != buffer) {
+diff --git a/src/shared_library.c b/src/shared_library.c
+index 0190afcc..5e0d023e 100644
+--- a/src/shared_library.c
++++ b/src/shared_library.c
+@@ -127,7 +127,7 @@ rcutils_load_shared_library(
+     goto fail;
+   }
+   lib->library_path = rcutils_strdup(image_name, lib->allocator);
+-#elif defined(_GNU_SOURCE) && !defined(__QNXNTO__) && !defined(__ANDROID__)
++#elif defined(_GNU_SOURCE) && !defined(__QNXNTO__) && !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+   struct link_map * map = NULL;
+   if (dlinfo(lib->lib_pointer, RTLD_DI_LINKMAP, &map) != 0) {
+     RCUTILS_SET_ERROR_MSG_WITH_FORMAT_STRING("dlinfo error: %s", dlerror());

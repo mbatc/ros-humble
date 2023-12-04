@@ -167,11 +167,11 @@ rclcpp:
 rclcpp_action:
   add_host: [ "ros-humble-yaml-cpp-vendor", "fmt" ]
 examples_rclcpp_minimal_subscriber:
-  add_host: [ "ros-humble-yaml-cpp-vendor", "fmt" ]
+  add_host: [ "ros-humble-yaml-cpp-vendor", "fmt", "sqlite", "bzip2", "zlib", "ros-humble-rmw-wasm-cpp", "libffi" ]
 examples_rclcpp_minimal_publisher:
-  add_host: [ "ros-humble-yaml-cpp-vendor", "fmt" ]
+  add_host: [ "ros-humble-yaml-cpp-vendor", "fmt", "sqlite", "bzip2", "zlib", "ros-humble-rmw-wasm-cpp", "libffi" ]
 rclcpp_components:
-  add_host: [ "ros-humble-yaml-cpp-vendor", "fmt" ]
+  add_host: [ "ros-humble-yaml-cpp-vendor", "fmt", "sqlite", "bzip2", "zlib", "ros-humble-rmw-wasm-cpp", "libffi" ]
 rmw_implementation:
   remove_host:
     - ros-humble-rmw-connextdds
@@ -184,16 +184,16 @@ rmw_implementation:
     - ros-humble-rmw-fastrtps-cpp
     - ros-humble-rmw-fastrtps-dynamic-cpp
   add_run:
-    - { "sel(target_platform == 'emscripten-32')": ros-humble-rmw-wasm-cpp }
-    - { "sel(target_platform != 'emscripten-32')": ros-humble-rmw-connextdds }
-    - { "sel(target_platform != 'emscripten-32')": ros-humble-rmw-cyclonedds-cpp }
-    - { "sel(target_platform != 'emscripten-32')": ros-humble-rmw-fastrtps-cpp }
-    - { "sel(target_platform != 'emscripten-32')": ros-humble-rmw-fastrtps-dynamic-cpp }
+    - { "sel(target_platform == 'emscripten-wasm32')": ros-humble-rmw-wasm-cpp }
+    - { "sel(target_platform != 'emscripten-wasm32')": ros-humble-rmw-connextdds }
+    - { "sel(target_platform != 'emscripten-wasm32')": ros-humble-rmw-cyclonedds-cpp }
+    - { "sel(target_platform != 'emscripten-wasm32')": ros-humble-rmw-fastrtps-cpp }
+    - { "sel(target_platform != 'emscripten-wasm32')": ros-humble-rmw-fastrtps-dynamic-cpp }
   add_host:
-    - { "sel(target_platform == 'emscripten-32')": ros-humble-rmw-wasm-cpp }
-    - { "sel(target_platform != 'emscripten-32')": ros-humble-rmw-connextdds }
-    - { "sel(target_platform != 'emscripten-32')": ros-humble-rmw-cyclonedds-cpp }
-    - { "sel(target_platform != 'emscripten-32')": ros-humble-rmw-fastrtps-cpp }
-    - { "sel(target_platform != 'emscripten-32')": ros-humble-rmw-fastrtps-dynamic-cpp }
+    - { "sel(target_platform == 'emscripten-wasm32')": ros-humble-rmw-wasm-cpp }
+    - { "sel(target_platform != 'emscripten-wasm32')": ros-humble-rmw-connextdds }
+    - { "sel(target_platform != 'emscripten-wasm32')": ros-humble-rmw-cyclonedds-cpp }
+    - { "sel(target_platform != 'emscripten-wasm32')": ros-humble-rmw-fastrtps-cpp }
+    - { "sel(target_platform != 'emscripten-wasm32')": ros-humble-rmw-fastrtps-dynamic-cpp }
     - "ros-humble-yaml-cpp-vendor"
     - "fmt"
