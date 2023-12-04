@@ -4,8 +4,8 @@ export LINK=$CXX
 export CONDA_BUILD_CROSS_COMPILATION="1"
 
 echo "set_property(GLOBAL PROPERTY TARGET_SUPPORTS_SHARED_LIBS TRUE)">> $SRC_DIR/__vinca_shared_lib_patch.cmake
-echo "set(CMAKE_SHARED_LIBRARY_CREATE_C_FLAGS \"-s SIDE_MODULE=1\")">> $SRC_DIR/__vinca_shared_lib_patch.cmake
-echo "set(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS \"-s SIDE_MODULE=1\")">> $SRC_DIR/__vinca_shared_lib_patch.cmake
+echo "set(CMAKE_SHARED_LIBRARY_CREATE_C_FLAGS \"-s SIDE_MODULE=1 -sWASM_BIGINT \")">> $SRC_DIR/__vinca_shared_lib_patch.cmake
+echo "set(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS \"-s SIDE_MODULE=1 -sWASM_BIGINT \")">> $SRC_DIR/__vinca_shared_lib_patch.cmake
 echo "set(CMAKE_STRIP FALSE)  # used by default in pybind11 on .so modules">> $SRC_DIR/__vinca_shared_lib_patch.cmake
 
 export USE_WASM=ON

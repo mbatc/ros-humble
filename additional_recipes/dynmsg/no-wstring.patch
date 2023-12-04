@@ -1,3 +1,16 @@
+diff --git a/dynmsg/CMakeLists.txt b/dynmsg/CMakeLists.txt
+index aa2075d..28975c2 100644
+--- a/dynmsg/CMakeLists.txt
++++ b/dynmsg/CMakeLists.txt
+@@ -32,7 +32,7 @@ option(DYNMSG_YAML_CPP_BAD_INT8_HANDLING "Work around buggy [u]int8_t handling b
+ option(DYNMSG_PARSER_DEBUG "Enable debugging-related logs for YAML->msg conversion" OFF)
+ configure_file(include/${PROJECT_NAME}/config.hpp.in include/${PROJECT_NAME}/config.hpp)
+ 
+-add_library(dynmsg STATIC
++add_library(dynmsg SHARED
+   src/msg_parser_c.cpp
+   src/msg_parser_cpp.cpp
+   src/message_reading_c.cpp
 diff --git a/dynmsg/src/message_reading_c.cpp b/dynmsg/src/message_reading_c.cpp
 index a6bd289..ea37513 100644
 --- a/dynmsg/src/message_reading_c.cpp
