@@ -152,6 +152,9 @@ rqt_image_overlay:
   add_host: ["REQUIRE_OPENGL"]
 tracetools:
   remove_host: [ "pkg-config" ]
+spdlog_vendor:
+  add_host: ["fmt"]
+  add_run: ["fmt"]
 rcl_logging_spdlog:
   add_host: [ "fmt" ]
 rcl:

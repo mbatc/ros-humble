@@ -7,7 +7,7 @@ source:
   git_rev: main
   folder: ros-humble-rmw-wasm-cpp/src/work
   patches:
-    - patches/ros-humble-rmw-wasm-cpp.patch
+    - fix-fpic.patch
 
 build:
   script:

@@ -12,13 +12,15 @@ Subject: [PATCH 2/2] no backtrace for emscripten and fixed building
  4 files changed, 19 insertions(+), 16 deletions(-)
 
 diff --git a/osrf_testing_tools_cpp/CMakeLists.txt b/osrf_testing_tools_cpp/CMakeLists.txt
-index e6f56ba..9e1cf50 100644
+index e6f56ba..ef02bf9 100644
 --- a/osrf_testing_tools_cpp/CMakeLists.txt
 +++ b/osrf_testing_tools_cpp/CMakeLists.txt
-@@ -17,16 +17,6 @@ endif()
+@@ -15,18 +15,12 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+   -Wshadow -Wnon-virtual-dtor)
+ endif()
  
- add_subdirectory(src)
- 
+-add_subdirectory(src)
+-
 -include(CTest)
 -if(BUILD_TESTING)
 -  include(cmake/osrf_testing_tools_cpp_require_googletest.cmake)
@@ -27,8 +29,12 @@ index e6f56ba..9e1cf50 100644
 -    VENDOR_DIR "${CMAKE_SOURCE_DIR}/vendor")
 -
 -  add_subdirectory(test)
--endif()
--
++if (EMSCRIPTEN)
++  set(CMAKE_CXX_FLAGS "-pthread ${CMAKE_CXX_FLAGS}")
+ endif()
+ 
++add_subdirectory(src)
++
  configure_file(osrf_testing_tools_cppConfig.cmake.in
    "${PROJECT_BINARY_DIR}/osrf_testing_tools_cppConfig.cmake" @ONLY)
  configure_file(osrf_testing_tools_cppConfigVersion.cmake.in
