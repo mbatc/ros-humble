@@ -2,13 +2,10 @@ gazebo:
   - '11'
 libpqxx:
   - 6
-<<<<<<< HEAD
 pcl:
   - 1.12.1
-=======
 numpy:
   - 1.23
->>>>>>> 715930bcbd67d52b6be803897813cfae38d166f6
 ogre:
   - 1.12.*
 setuptools:
@@ -17,15 +14,12 @@ setuptools:
 cdt_name:  # [linux]
   - cos7   # [linux]
 
-<<<<<<< HEAD
-=======
 python:
   - 3.11.* *_cpython
 python_impl:
   - cpython
 
 # Project overrides
->>>>>>> 715930bcbd67d52b6be803897813cfae38d166f6
 macos_min_version:             # [osx and x86_64]
   - 10.14                      # [osx and x86_64]
 macos_machine:                 # [osx]
