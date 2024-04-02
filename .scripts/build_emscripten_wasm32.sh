@@ -4,6 +4,8 @@ set -xeuo pipefail
 export PYTHONUNBUFFERED=1
 export FEEDSTOCK_ROOT="${FEEDSTOCK_ROOT:-/home/conda/feedstock_root}"
 export RECIPE_ROOT="${RECIPE_ROOT:-/home/conda/recipe_root}"
+export EMFORGE_DIR=emforge-recipes
+export EMSDK_VER="3.1.45"
 # export CI_SUPPORT="${FEEDSTOCK_ROOT}/.ci_support"
 # export CONFIG_FILE="${CI_SUPPORT}/${CONFIG}.yaml"
 
@@ -34,7 +36,17 @@ conda config --remove channels defaults
 # conda config --set channel_priority strict
 
 mamba update conda --yes --quiet -c conda-forge
-mamba install --yes --quiet pip conda-build anaconda-client mamba boa
+mamba install --yes --quiet pip conda-build anaconda-client mamba playwright
+
+echo "Setup emscripten-forge recipes"
+
+mkdir -p $EMFORGE_DIR
+pushd $EMFORGE_DIR
+git clone https://github.com/emscripten-forge/recipes.git .
+./emsdk/setup_emsdk.sh $EMSDK_VER $(pwd)/emsdk_install
+mamba install playwright
+python -m pip install git+https://github.com/DerThorsten/boa.git@python_api_v2 --no-deps --ignore-installed
+popd
 
 # setup_conda_rc "${FEEDSTOCK_ROOT}" "${RECIPE_ROOT}" "${CONFIG_FILE}"
 # export PATH="$HOME/miniconda/bin:$PATH"
@@ -51,7 +63,7 @@ pwd
 
 for recipe in ${CURRENT_RECIPES[@]}; do
 	cd ${FEEDSTOCK_ROOT}/recipes/${recipe}
-	boa build . -m ${FEEDSTOCK_ROOT}/.ci_support/conda_forge_pinnings.yaml -m ${FEEDSTOCK_ROOT}/conda_build_config.yaml
+	boa build . --target-platform=emscripten-wasm32 -m ${EMFORGE_DIR}/conda_build_config.yaml
 done
 
 # anaconda -t ${ANACONDA_API_TOKEN} upload /opt/conda/build_artifacts/emscripten-wasm32/*.tar.bz2 --force
