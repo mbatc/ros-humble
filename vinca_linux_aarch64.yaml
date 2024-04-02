@@ -5,9 +5,9 @@ conda_index:
   - robostack.yaml
   - packages-ignore.yaml
 
-build_number: 3
+build_number: 4
 
-mutex_package: ros2-distro-mutex 0.3 humble
+mutex_package: ros2-distro-mutex 0.5 humble
 
 skip_all_deps: false
 
@@ -33,18 +33,19 @@ packages_remove_from_deps:
 
 skip_existing:
   - https://conda.anaconda.org/robostack-staging/
+  # - /home/ubuntu/micromamba/envs/devenv/conda-bld/
 
 packages_select_by_deps:
   # only subset of packages to reduce maintainer load
+  - ros2-controllers
+  - diff-drive-controller
+  - libcamera
   - ros_workspace
   - ros_environment
   - ament_cmake
   - ros_base
   - desktop
   - desktop_full
-  - navigation2
-  - moveit
-  - moveit_servo
   - rosbag2_storage_mcap
   - cartographer-ros
   - foxglove_bridge
@@ -53,17 +54,42 @@ packages_select_by_deps:
   - gazebo_dev
   - gazebo_ros
   - gazebo_plugins
-  - gazebo_ros_control
+  - gazebo_ros2_control
   - gazebo_ros_pkgs
 
-  # - rosbridge_suite
-  # - rviz2
-  # - behaviortree_cpp_v3
-  # - ros_workspace
+  - ackermann-msgs
+  - velodyne
+  - geodesy
+  - geographic_info
+  - tf-transformations
+  - robot_localization
+
+  - rosbridge_suite
+  - vision-msgs
+  - slam-toolbox
+
+  - ros2_control
+  - vision-msgs-rviz-plugins
+
+  - navigation2
+  - rviz2
+  - behaviortree_cpp_v3
+  - ament_cmake_catch2
+
+  - apriltag
+  - apriltag_ros
+
+  # - moveit
+  # - moveit_servo
+
   # - control_toolbox
-  # - robot_localization
   # - ros1_bridge
-  # - velodyne
+
+  # ros2_control
+  - gazebo-ros2-control
+
+  # Modern gz-sim integration
+  - ros-gz
 
   # Used to work, now needs fixes
   # - rtabmap
@@ -123,7 +149,6 @@ packages_select_by_deps:
   # - ros-ign
   # - menge-vendor
   # - openvslam
-  # - ackermann-msgs
   # - four-wheel-steering-msgs
   # - ign-rviz
   # - ign-rviz-common
@@ -151,7 +176,6 @@ packages_select_by_deps:
   # - ros-ign-image
   # - ros-ign-interfaces
   # - soccer-marker-generation
-  # - vision-msgs
   # - plotjuggler-ros
   # - plotjuggler
   # - acado-vendor
@@ -201,9 +225,7 @@ packages_select_by_deps:
   # - examples-rclpy-pointcloud-publisher
   # - examples-tf2-py
   # - filters
-  # - geodesy
   # - geographic-info
-  # - geographic-msgs
   # - gps-msgs
   # - gps-tools
   # - grbl-msgs
@@ -319,7 +341,6 @@ packages_select_by_deps:
   # - self-test
   # - sensor-msgs-py
   # - serial-driver
-  # - slam-toolbox
   # - soccer-vision-msgs
   # - stereo-image-proc
   # - stubborn-buddies
@@ -332,7 +353,6 @@ packages_select_by_deps:
   # - test-apex-test-tools
   # - test-bond
   # - test-launch-system-modes
-  # - tf-transformations
   # - topic-statistics-demo
   # - tracetools-analysis
   # - tracetools-launch

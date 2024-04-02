@@ -1,9 +1,11 @@
+ament_package:
+  add_host: ['importlib_resources']
 foxglove_bridge:
   add_host: ["ros-humble-ament-cmake"]
 ros_ign_interfaces:
   add_host: ["ros-humble-rcl-interfaces"]
 cartographer_ros:
-  add_host: ["cartographer 2.*"]
+  add_host: ["cartographer 2.*", "libboost-devel"]
 libyaml_vendor:
   add_host: ["yaml-cpp", "yaml"]
   add_run: ["yaml-cpp", "yaml"]
@@ -34,16 +36,16 @@ rviz_ogre_vendor:
   add_host: ["zlib", "freeimage", "freetype", "assimp", "zziplib", "pugixml"]
   add_run: ["assimp"]
 pcl_conversions:
-  add_host: ["REQUIRE_OPENGL"]
+  add_host: ["REQUIRE_OPENGL", "libboost-devel"]
 pcl_ros:
-  add_host: ["REQUIRE_OPENGL"]
+  add_host: ["REQUIRE_OPENGL", "libboost-devel"]
 rviz_rendering:
   add_host: ["glew"]
 behaviortree_cpp_v3:
-  add_host: ["boost-cpp", "cppzmq"]
-  add_run: ["boost-cpp"]
+  add_host: ["libboost-devel", "cppzmq"]
+  add_run: ["libboost"]
 plotjuggler:
-  add_host: ["libxcb", "elfutils", "ros-humble-ros-workspace"]
+  add_host: ["libxcb", {sel(linux): elfutils}, "ros-humble-ros-workspace"]
 embree_vendor:
   add_host: ["REQUIRE_OPENGL", "libpng", "libjpeg-turbo", "openimageio", "tbb", "tbb-devel", "embree"]
 ign_rviz_common:
@@ -55,7 +57,7 @@ ign_rviz_plugins:
 image_view:
   add_host: ["REQUIRE_OPENGL"]
 nao_lola:
-  add_host: ["boost"]
+  add_host: ["libboost-devel"]
 ros_ign_gazebo:
   add_host: ["ros-humble-std-msgs", "ros-humble-rclcpp", "REQUIRE_OPENGL"]
 ros_ign_gazebo_demos:
@@ -71,8 +73,8 @@ libg2o:
 fmilibrary_vendor:
   add_host: ["fmilib"]
 mrpt2:
-  add_host:  ["assimp", "octomap", "tinyxml2", "boost-cpp", "jsoncpp", "gtest", "boost", "libdc1394", "xorg-libxcomposite", "libftdi", "ros-humble-octomap"]
-  add_run:   ["assimp", "octomap", "tinyxml2", "boost-cpp", "jsoncpp", "gtest", "boost", "libdc1394", "xorg-libxcomposite", "libftdi", "ros-humble-octomap"]
+  add_host:  ["assimp", "octomap", "tinyxml2", "libboost-devel", "jsoncpp", "gtest", "libboost-python-devel", "libdc1394", "xorg-libxcomposite", "libftdi", "ros-humble-octomap"]
+  add_run:   ["assimp", "octomap", "tinyxml2", "libboost-devel", "jsoncpp", "gtest", "libboost-python-devel", "libdc1394", "xorg-libxcomposite", "libftdi", "ros-humble-octomap"]
   add_build: [{"sel(linux)": "{{ cdt('libxcomposite-devel') }}"}]
 ros1_rosbag_storage_vendor:
   add_host: ["ros-noetic-roscpp", "ros-noetic-roslz4", "ros-noetic-rostest"]
@@ -87,7 +89,7 @@ nav2_smac_planner:
   add_build: [{"sel(osx)": "llvm-openmp"}]
   add_host: [{"sel(osx)": "llvm-openmp"}, "ompl", "libode"]
 nav2_util:
-  add_host: ["boost-cpp"]
+  add_host: ["libboost-devel"]
 nav2_constrained_smoother:
   add_host: [{"sel(win)": "openblas"}]
 ompl:
@@ -200,3 +202,11 @@ rmw_implementation:
     - { "sel(target_platform != 'emscripten-wasm32')": ros-humble-rmw-fastrtps-dynamic-cpp }
     - "ros-humble-yaml-cpp-vendor"
     - "fmt"
+slam_toolbox:
+  add_build: [{sel(build_platform != target_platform): qt-main}]
+  add_host: ["REQUIRE_OPENGL"]
+vision_msgs_rviz_plugins:
+  add_build: [{sel(build_platform != target_platform): qt-main}]
+  add_host: ["REQUIRE_OPENGL"]
+velodyne_pointcloud:
+  add_host: ["libboost-devel"]

@@ -17,7 +17,7 @@ index aa8811c..77eb0d3 100644
  
  macro(build_benchmark)
    set(extra_cmake_args)
-@@ -80,18 +74,6 @@ macro(build_benchmark)
+@@ -80,18 +73,6 @@ macro(build_benchmark)
    )
  endmacro()
  

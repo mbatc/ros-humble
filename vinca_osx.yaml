@@ -5,9 +5,9 @@ conda_index:
   - robostack.yaml
   - packages-ignore.yaml
 
-build_number: 3
+build_number: 6
 
-mutex_package: ros2-distro-mutex 0.3 humble
+mutex_package: ros2-distro-mutex 0.5 humble
 
 skip_all_deps: false
 
@@ -42,8 +42,6 @@ packages_select_by_deps:
   - ros_environment
   - ros_base
   - desktop
-  - moveit
-  - moveit_servo
   - desktop_full
   - navigation2
   - rosbridge_suite
@@ -52,23 +50,55 @@ packages_select_by_deps:
   - foxglove_bridge
   - turtlebot3
 
+  - control_msgs
+  - steering-controllers-library
+  - ackermann-steering-controller
+  - admittance-controller
+  - forward-command-controller
+  - bicycle_steering_controller
+  - diff_drive_controller
+  - effort_controllers
+  - force_torque_sensor_broadcaster
+  - imu_sensor_broadcaster
+  - position_controllers
+
+  - ros2_control
+  - ros2_controllers
+
   - joint-state-broadcaster
   - joint-state-publisher
   - joint-trajectory-controller
+  - joint-limits
   - xacro
   - robot-localization
-  # - velodyne
-  # - sbg_driver
-  # - vision-opencv
+  - velodyne
+  - sbg_driver
+  - vision-opencv
   - ackermann-msgs
+  - ament_cmake_catch2
 
   - gazebo_msgs
   - gazebo_dev
   - gazebo_ros
   - gazebo_plugins
-  - gazebo_ros_control
   - gazebo_ros_pkgs
 
   - turtlebot3_gazebo
+  - plotjuggler-ros
+  - plotjuggler
+
+  - apriltag
+  - apriltag_ros
+
+  # ros2_control
+  - gazebo_ros2_control
+  - ros2_control
+  - ros2_controllers
+
+  # Modern gz-sim integration
+  - ros-gz
+
+  # - moveit
+  # - moveit_servo
 
 patch_dir: patch
