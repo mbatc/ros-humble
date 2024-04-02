@@ -1,12 +1,10 @@
 package:
   name: ros2-distro-mutex
-  version: 0.3.0
+  version: 0.5.0
 
 build:
-  number: 1
+  number: 2
   string: humble
-  # run_exports:
-  #   - "{{ pin_subpackage('ros2-distro-mutex', max_pin='x.x') }}"
 
 about:
   home: https://github.com/robostack/ros-humble

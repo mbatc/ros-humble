@@ -5,9 +5,9 @@ conda_index:
   - robostack.yaml
   - packages-ignore.yaml
 
-build_number: 3
+build_number: 5
 
-mutex_package: ros2-distro-mutex 0.3 humble
+mutex_package: ros2-distro-mutex 0.5 humble
 
 skip_all_deps: false
 
@@ -34,7 +34,8 @@ packages_remove_from_deps:
 skip_existing:
   # - https://conda.anaconda.org/robostack-staging/
   # - /home/tobias/mambaforge/envs/emrobostack-dev/conda-bld/
-  # - /home/michael/micromamba/envs/emrobostack-dev/conda-bld/
+  # - /home/michael/micromamba/envs/emscripten-forge/conda-bld/
+  - https://repo.mamba.pm/robostack-wasm
   - https://repo.mamba.pm/emscripten-forge
 
 packages_select_by_deps:

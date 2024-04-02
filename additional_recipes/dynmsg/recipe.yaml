@@ -16,7 +16,7 @@ build:
   script:
     sel(unix): build.sh
     sel(emscripten-wasm32): build.sh
-  number: 1
+  number: 2
 
 requirements:
   build:
@@ -47,7 +47,7 @@ requirements:
     - ros-humble-rosidl-typesupport-introspection-c
     - ros-humble-rosidl-typesupport-introspection-cpp
     - ros-humble-yaml-cpp-vendor
-    - ros2-distro-mutex 0.3 humble
+    - ros2-distro-mutex 0.5 humble
   run:
     - sel(target_platform != 'emscripten-wasm32'): cmake
     - python
@@ -55,7 +55,7 @@ requirements:
     - ros-humble-rosidl-runtime-cpp
     - ros-humble-rosidl-typesupport-introspection-c
     - ros-humble-rosidl-typesupport-introspection-cpp
-    - ros2-distro-mutex 0.3 humble
+    - ros2-distro-mutex 0.5 humble
     - sel(osx and x86_64): __osx >={{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}
 
 about:
