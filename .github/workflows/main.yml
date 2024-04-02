@@ -146,6 +146,35 @@ jobs:
       env:
         INPUT_GITHUB_TOKEN: ${{ secrets.GHA_PAT }}
 
+    # Generate recipes for emscripten-wasm32
+    - name: Reset repo
+      run: |
+        git reset --hard origin/main
+    - name: Install vinca fork for emscripten support
+      run: |
+        pip install git+https://github.com/mbatc/vinca.git
+
+    - name: Generate recipes for emscripten-wasm32
+      run: |
+        git clean -fdx
+        cp vinca_emscripten32.yaml vinca.yaml
+        vinca --multiple --platform emscripten-wasm32
+    - name: Generate azure pipelines for emscripten-wasm32
+      run: |
+        vinca-gha --platform emscripten-wasm32 --trigger-branch buildbranch_emscripten_wasm32 -d ./recipes --additional-recipes
+    - name: Commit files for emscripten-wasm32
+      run: |
+        if [[ -f "emscripten_wasm32.yml" ]]; then
+            mv emscripten_wasm32.yml .github/workflows/
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Action"
+            git add . -f
+            git commit -m "Add build files `date '+%Y-%m-%d-%H%M'`" -a
+            remote_repo="https://${GITHUB_ACTOR}:${INPUT_GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+            git push "${remote_repo}" HEAD:buildbranch_emscripten_wasm32 --follow-tags --force
+        fi
+      env:
+        INPUT_GITHUB_TOKEN: ${{ secrets.GHA_PAT }}
 on:
   push:
     branches:
