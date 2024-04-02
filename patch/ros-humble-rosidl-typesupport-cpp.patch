@@ -1,7 +1,30 @@
-diff --git a/rosidl_typesupport_cpp/rosidl_typesupport_cpp-extras.cmake.in b/rosidl_typesupport_cpp/rosidl_typesupport_cpp-extras.cmake.in
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c6aa1cb..0b8dc88 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -39,9 +39,15 @@ target_include_directories(${PROJECT_NAME} PUBLIC
+ target_link_libraries(${PROJECT_NAME} PUBLIC
+   rosidl_runtime_c::rosidl_runtime_c
+   rosidl_typesupport_c::rosidl_typesupport_c)
+-target_link_libraries(${PROJECT_NAME} PRIVATE
+-  rcpputils::rcpputils
+-  rcutils::rcutils)
++
++if (EMSCRIPTEN)
++  target_link_libraries(${PROJECT_NAME} PRIVATE
++    rcpputils::rcpputils)
++else()
++  target_link_libraries(${PROJECT_NAME} PRIVATE
++    rcpputils::rcpputils
++    rcutils::rcutils)
++endif()
+ 
+ # Export old-style CMake variables
+ ament_export_include_directories("include/${PROJECT_NAME}")
+diff --git a/rosidl_typesupport_cpp-extras.cmake.in b/rosidl_typesupport_cpp-extras.cmake.in
 index 50609ce..0a0ddc6 100644
---- a/rosidl_typesupport_cpp/rosidl_typesupport_cpp-extras.cmake.in
-+++ b/rosidl_typesupport_cpp/rosidl_typesupport_cpp-extras.cmake.in
+--- a/rosidl_typesupport_cpp-extras.cmake.in
++++ b/rosidl_typesupport_cpp-extras.cmake.in
 @@ -25,7 +25,7 @@ normalize_path(rosidl_typesupport_cpp_BIN
    "${rosidl_typesupport_cpp_BIN}")
  
