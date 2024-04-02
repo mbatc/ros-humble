@@ -32,9 +32,6 @@ packages_remove_from_deps:
   - warehouse_ros_mongo
 
 skip_existing:
-  # - https://conda.anaconda.org/robostack-staging/
-  # - /home/tobias/mambaforge/envs/emrobostack-dev/conda-bld/
-  # - /home/michael/micromamba/envs/emscripten-forge/conda-bld/
   - https://repo.mamba.pm/robostack-wasm
   - https://repo.mamba.pm/emscripten-forge
 
