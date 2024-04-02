@@ -1,0 +1,20 @@
+package:
+  name: ros2-distro-mutex
+  version: 0.5.0
+
+build:
+  number: 2
+  string: humble
+
+requirements: {}
+about:
+  home: https://github.com/robostack/ros-humble
+  license: BSD-3-Clause
+  summary: |
+    The ROS2 distro mutex. To switch between ROS2 versions, you need to change the mutex.
+    E.g. mamba install ros2-distro-mutex=*=humble to switch to humble.
+
+extra:
+  recipe-maintainers:
+    - ros-forge
+
