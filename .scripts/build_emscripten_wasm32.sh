@@ -2,85 +2,57 @@
 
 set -xeuo pipefail
 export PYTHONUNBUFFERED=1
-export FEEDSTOCK_ROOT="${FEEDSTOCK_ROOT:-/home/conda/feedstock_root}"
-export RECIPE_ROOT="${RECIPE_ROOT:-/home/conda/recipe_root}"
-export EMFORGE_DIR=emforge-recipes
+export FEEDSTOCK_ROOT=`pwd`
 export EMSDK_VER="3.1.45"
-# export CI_SUPPORT="${FEEDSTOCK_ROOT}/.ci_support"
-# export CONFIG_FILE="${CI_SUPPORT}/${CONFIG}.yaml"
+export MAMBA_ROOT_PREFIX=/home/runner/micromamba
+export EMFORGE_DIR=/home/runner/emforge-recipes
 
-# Install emscripten forge
+"${SHELL}" <(curl -L micro.mamba.pm/install.sh)
+eval "$(micromamba shell hook --shell bash)"
 
-cat >~/.condarc <<CONDARC
-conda-build:
-    root-dir: /opt/conda/build_artifacts
-CONDARC
+micromamba config set remote_max_retries 5
 
-# This doesn't work, see e.g. https://dev.azure.com/robostack/ros_pipelines/_build/results?buildId=188&view=logs&j=4e20d398-0572-5e54-89c7-6bdb9c00a59a&t=f5885ff8-badf-54b3-1543-35164851bdf3
-# if grep -q libgl "recipes/${CURRENT_BUILD_PKG_NAME}.yaml"; then
-# 	sudo yum install -y install mesa-libGL-devel
-# fi
+micromamba create -n devenv --quiet --yes conda-forge-ci-setup=3 conda-build=3.27 pip boa "quetz-client<= 0.0.4" anaconda-client mamba playwright ruamel.yaml=0.18.1 -c conda-forge -c microsoft
+micromamba activate devenv
 
-export "CONDA_BLD_PATH=/opt/conda/build_artifacts"
+set -e
 
-mkdir -p $CONDA_BLD_PATH
-conda index $CONDA_BLD_PATH
-
-conda config --set remote_max_retries 5
-conda config --add channels https://repo.mamba.pm/emscripten-forge
-conda config --add channels robostack-humble
-conda config --add channels robostack-staging
-conda config --add channels conda-forge
-conda config --add channels $CONDA_BLD_PATH
-conda config --remove channels defaults
-# conda config --set channel_priority strict
-
-mamba update conda --yes --quiet -c conda-forge
-mamba install --yes --quiet pip conda-build anaconda-client mamba playwright
+export "CONDA_BLD_PATH=$CONDA_PREFIX/conda-bld/"
+mkdir -p ${CONDA_BLD_PATH}
+mkdir -p ${CONDA_BLD_PATH}/emscripten-wasm32
+mkdir -p ${CONDA_BLD_PATH}/linux-64
+mkdir -p ${CONDA_BLD_PATH}/noarch
+micromamba config append channels conda-forge --env
+micromamba config append channels robostack-staging --env
+micromamba config append channels https://beta.mamba.pm/channels/robostack-wasm --env
+micromamba config append channels https://repo.mamba.pm/emscripten-forge --env
+micromamba config append channels $CONDA_BLD_PATH --env
 
 echo "Setup emscripten-forge recipes"
-
 mkdir -p $EMFORGE_DIR
 pushd $EMFORGE_DIR
 git clone https://github.com/emscripten-forge/recipes.git .
 ./emsdk/setup_emsdk.sh $EMSDK_VER $(pwd)/emsdk_install
-mamba install playwright
 python -m pip install git+https://github.com/DerThorsten/boa.git@python_api_v2 --no-deps --ignore-installed
 popd
-
-# setup_conda_rc "${FEEDSTOCK_ROOT}" "${RECIPE_ROOT}" "${CONFIG_FILE}"
-# export PATH="$HOME/miniconda/bin:$PATH"
-conda config --set anaconda_upload yes
-conda config --set show_channel_urls true
-conda config --set auto_update_conda false
-conda config --set add_pip_as_python_dependency false
-
-conda info
-conda config --show-sources
-conda list --show-channel-urls
-
-pwd
 
 for recipe in ${CURRENT_RECIPES[@]}; do
 	cd ${FEEDSTOCK_ROOT}/recipes/${recipe}
 	boa build . --target-platform=emscripten-wasm32 -m ${EMFORGE_DIR}/conda_build_config.yaml
 done
 
-# anaconda -t ${ANACONDA_API_TOKEN} upload /opt/conda/build_artifacts/emscripten-wasm32/*.tar.bz2 --force
-# quetz-client "${QUETZ_URL}" /opt/conda/build_artifacts --force
+echo "Upload packages"
 
-# set up the condarc
+export QUETZ_API_KEY=$ANACONDA_API_TOKEN
 
-# source run_conda_forge_build_setup
+if [ $(ls ${CONDA_BLD_PATH}/emscripten-wasm32/*.tar.bz2 | wc -l) -ne 0 ]; then
+  quetz-client https://beta.mamba.pm/channels/robostack-wasm ${CONDA_BLD_PATH}/emscripten-wasm32/*.tar.bz2
+fi
 
-# # make the build number clobber
-# make_build_number "${FEEDSTOCK_ROOT}" "${RECIPE_ROOT}" "${CONFIG_FILE}"
+if [ $(ls ${CONDA_BLD_PATH}/linux-64/*.tar.bz2 | wc -l) -ne 0 ]; then
+  quetz-client https://beta.mamba.pm/channels/robostack-wasm ${CONDA_BLD_PATH}/linux-64/*.tar.bz2
+fi
 
-# conda build "${RECIPE_ROOT}" -m "${CI_SUPPORT}/${CONFIG}.yaml" \
-#     --clobber-file "${CI_SUPPORT}/clobber_${CONFIG}.yaml"
-
-# if [[ "${UPLOAD_PACKAGES}" != "False" ]]; then
-#     upload_package  "${FEEDSTOCK_ROOT}" "${RECIPE_ROOT}" "${CONFIG_FILE}"
-# fi
-
-# touch "${FEEDSTOCK_ROOT}/build_artifacts/conda-forge-build-done-${CONFIG}"
+if [ $(ls ${CONDA_BLD_PATH}/noarch/*.tar.bz2 | wc -l) -ne 0 ]; then
+  quetz-client https://beta.mamba.pm/channels/robostack-wasm ${CONDA_BLD_PATH}/noarch/*.tar.bz2
+fi
