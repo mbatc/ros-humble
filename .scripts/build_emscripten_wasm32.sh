@@ -31,7 +31,7 @@ micromamba config append channels $CONDA_BLD_PATH --env
 echo "Setup emscripten-forge recipes"
 mkdir -p $EMFORGE_DIR
 pushd $EMFORGE_DIR
-git clone https://github.com/emscripten-forge/recipes.git .
+git clone https://github.com/mbatc/emscripten-forge-recipes.git .
 ./emsdk/setup_emsdk.sh $EMSDK_VER $(pwd)/emsdk_install
 python -m pip install git+https://github.com/DerThorsten/boa.git@python_api_v2 --no-deps --ignore-installed
 popd
