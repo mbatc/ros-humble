@@ -16,7 +16,7 @@ build:
   script:
     sel(unix): build.sh
     sel(emscripten-wasm32): build.sh
-  number: 2
+  number: 6
 
 requirements:
   build:
