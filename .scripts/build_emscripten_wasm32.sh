@@ -46,13 +46,13 @@ echo "Upload packages"
 export QUETZ_API_KEY=$ANACONDA_API_TOKEN
 
 if [ $(ls ${CONDA_BLD_PATH}/emscripten-wasm32/*.tar.bz2 | wc -l) -ne 0 ]; then
-  quetz-client https://beta.mamba.pm/channels/robostack-wasm ${CONDA_BLD_PATH}/emscripten-wasm32/*.tar.bz2
+  quetz-client https://beta.mamba.pm/channels/robostack-wasm ${CONDA_BLD_PATH}/emscripten-wasm32/*.tar.bz2 --force
 fi
 
 if [ $(ls ${CONDA_BLD_PATH}/linux-64/*.tar.bz2 | wc -l) -ne 0 ]; then
-  quetz-client https://beta.mamba.pm/channels/robostack-wasm ${CONDA_BLD_PATH}/linux-64/*.tar.bz2
+  quetz-client https://beta.mamba.pm/channels/robostack-wasm ${CONDA_BLD_PATH}/linux-64/*.tar.bz2 --force
 fi
 
 if [ $(ls ${CONDA_BLD_PATH}/noarch/*.tar.bz2 | wc -l) -ne 0 ]; then
-  quetz-client https://beta.mamba.pm/channels/robostack-wasm ${CONDA_BLD_PATH}/noarch/*.tar.bz2
+  quetz-client https://beta.mamba.pm/channels/robostack-wasm ${CONDA_BLD_PATH}/noarch/*.tar.bz2 --force
 fi
