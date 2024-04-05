@@ -6,7 +6,7 @@ source:
   git_rev: main
   folder: ros-humble-test-wasm/src/work
   patches:
-    - fix-yaml.patch
+    - fix-build.patch
 
 build:
   script:
@@ -50,6 +50,11 @@ requirements:
     - yaml
     - yaml-cpp
     - ros2-distro-mutex 0.5 humble
+    - sqlite
+    - bzip2
+    - zlib
+    - ros-humble-rmw-wasm-cpp
+    - libffi
   run:
     - sel(target_platform != 'emscripten-wasm32'): cmake
     - python
