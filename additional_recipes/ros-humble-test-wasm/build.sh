@@ -119,6 +119,6 @@ $CMAKE_GEN \
     -DCMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP=True \
     -DBUILD_TESTING=OFF \
     $EXTRA_CMAKE_ARGS \
-    $SRC_DIR/$PKG_NAME/src/work/rmw_wasm_cpp
+    $SRC_DIR/$PKG_NAME/src/work/test_wasm
 
 $CMAKE_BLD --build . --config Debug --target install
