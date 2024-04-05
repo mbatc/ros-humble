@@ -1,12 +1,13 @@
 diff --git a/test_wasm/CMakeLists.txt b/test_wasm/CMakeLists.txt
-index c6c95b9..d1f8891 100644
+index c6c95b9..0c6e621 100644
 --- a/test_wasm/CMakeLists.txt
 +++ b/test_wasm/CMakeLists.txt
-@@ -10,15 +10,33 @@ find_package(ament_cmake REQUIRED)
+@@ -10,21 +10,43 @@ find_package(ament_cmake REQUIRED)
  find_package(rclcpp REQUIRED)
  find_package(std_msgs REQUIRED)
  find_package(example_interfaces REQUIRED)
 +find_package(PkgConfig REQUIRED)
++find_package(Python COMPONENTS Interpreter Development REQUIRED)
 +find_package(rmw_wasm_cpp REQUIRED)
 +find_package(BZip2 REQUIRED)
 +find_package(SQLite3 REQUIRED)
@@ -20,8 +21,6 @@ index c6c95b9..d1f8891 100644
 +        list(REMOVE_ITEM rmw_wasm_cpp_LIBRARIES ${item})
 +    endif()
 +endforeach()
-+
-+set(CMAKE_EXECUTABLE_SUFFIX ".wasm")
  
  # Targets and link
  include(cmake/WasmBuildOptions.cmake)
@@ -37,16 +36,17 @@ index c6c95b9..d1f8891 100644
 +target_link_libraries(listener PUBLIC ${std_msgs_TARGETS} ${rmw_wasm_cpp_LIBRARIES} rclcpp::rclcpp ${libffi_LINK_LIBRARIES} Python::Python ${SQLite3_LIBRARIES} BZip2::BZip2 ZLIB::ZLIB)
  
  add_executable(server src/test_service_server.cpp)
- ament_target_dependencies(server rclcpp example_interfaces)
-@@ -26,6 +44,11 @@ ament_target_dependencies(server rclcpp example_interfaces)
- add_executable(client src/test_service_client.cpp)
- ament_target_dependencies(client rclcpp example_interfaces)
+-ament_target_dependencies(server rclcpp example_interfaces)
++target_link_libraries(server PUBLIC ${rmw_wasm_cpp_LIBRARIES} example_interfaces::example_interfaces__rosidl_typesupport_c example_interfaces::example_interfaces__rosidl_typesupport_cpp rclcpp::rclcpp ${libffi_LINK_LIBRARIES} Python::Python ${SQLite3_LIBRARIES} BZip2::BZip2 ZLIB::ZLIB)
  
+ add_executable(client src/test_service_client.cpp)
+-ament_target_dependencies(client rclcpp example_interfaces)
++target_link_libraries(client PUBLIC ${rmw_wasm_cpp_LIBRARIES} example_interfaces::example_interfaces__rosidl_typesupport_c example_interfaces::example_interfaces__rosidl_typesupport_cpp rclcpp::rclcpp ${libffi_LINK_LIBRARIES} Python::Python ${SQLite3_LIBRARIES} BZip2::BZip2 ZLIB::ZLIB)
++
 +target_compile_options(talker PUBLIC -fPIC)
 +target_compile_options(listener PUBLIC -fPIC)
 +target_compile_options(server PUBLIC -fPIC)
 +target_compile_options(client PUBLIC -fPIC)
-+
+ 
  add_compile_options("SHELL:-s USE_PTHREADS")
  
- add_link_options("SHELL:-s USE_PTHREADS")
